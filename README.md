@@ -1,7 +1,7 @@
 # UWPBluetoothPython
 Library exposing UWP Bluetooth libraries to be used with Python
 
-Targets UWP [Build 16299 (Fall Creators Update, version 1709)](https://docs.microsoft.com/en-us/windows/uwp/updates-and-versions/choose-a-uwp-version?ocid=VSClient_VerX_NewProject_version)
+Targets UWP [Build 17134 (version 1803)](https://docs.microsoft.com/en-us/windows/uwp/updates-and-versions/choose-a-uwp-version?ocid=VSClient_VerX_NewProject_version)
 
 The current version of [pythonnet](https://github.com/pythonnet/pythonnet) v2.3.0 seems to only support UWP 5.44 and below.
 
@@ -12,3 +12,8 @@ When adding new namespaces, sometimes the base namespace will need to be referen
 Assembly Binding Log Viewer [fuslogvw.exe](https://docs.microsoft.com/en-us/dotnet/framework/tools/fuslogvw-exe-assembly-binding-log-viewer)  
 
 .Net Decompliler [ILSpy](https://github.com/icsharpcode/ILSpy)
+
+
+## Credit
+Many thanks to [bhldh](https://github.com/hbldh)!  
+This was heavily adapted from his project [bleak](https://github.com/hbldh/bleak)
