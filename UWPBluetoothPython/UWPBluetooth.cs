@@ -44,6 +44,12 @@ namespace UWPBluetoothPython
             return results;
         }
 
+        public async Task<GattDescriptorsResult> GetDescriptorsAsync(GattCharacteristic characteristic)
+        {
+            GattDescriptorsResult results = await characteristic.GetDescriptorsAsync();
+            return results;
+        }
+
         private void Characteristic_ValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
             if (this.callbacks.ContainsKey(sender.Uuid))
@@ -86,6 +92,29 @@ namespace UWPBluetoothPython
             {
                 return await characteristic.WriteValueAsync(writer.DetachBuffer());
             }
+        }
+
+        public async Task<Tuple<GattCommunicationStatus, byte[]>> ReadDescriptorValueAsync(GattCharacteristic characteristic)
+        {
+            GattDescriptorsResult result = await characteristic.GetDescriptorsAsync();
+            byte[] output = null;
+            if (result.Status == GattCommunicationStatus.Success)
+            {
+                IReadOnlyList<GattDescriptor> descriptors = result.Descriptors;
+                foreach (GattDescriptor d in descriptors)
+                {
+                    var value = await d.ReadValueAsync();
+                    var reader = DataReader.FromBuffer(value.Value);
+                    output = new byte[reader.UnconsumedBufferLength];
+                    reader.ReadBytes(output);
+                }
+            }
+            else
+            {
+                output = new byte[0];
+            }
+
+            return new Tuple<GattCommunicationStatus, byte[]>(result.Status, output);
         }
 
         public async Task<GattCommunicationStatus> StartNotify(GattCharacteristic characteristic, TypedEventHandler<GattCharacteristic, byte[]> callback)
